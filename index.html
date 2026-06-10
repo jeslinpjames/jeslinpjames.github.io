@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jeslin P James — AI/ML & Backend Engineer</title>
+  <meta name="description" content="Portfolio of Jeslin P James — AI & Machine Learning engineer specialising in deep learning, computer vision, and production backend systems." />
+
+  <!-- Social sharing previews -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Jeslin P James — AI/ML & Backend Engineer" />
+  <meta property="og:description" content="Deep learning systems that listen, see, and ship — plus the production backends that serve them." />
+  <meta name="twitter:card" content="summary" />
+
+  <!-- Structured data for search engines -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Jeslin P James",
+    "jobTitle": "AI/ML & Backend Engineer",
+    "email": "mailto:jeslin@ug.cusat.ac.in",
+    "url": "https://github.com/jeslinpjames",
+    "sameAs": [
+      "https://github.com/jeslinpjames",
+      "https://www.linkedin.com/in/jeslin-p-james"
+    ],
+    "alumniOf": "Cochin University of Science and Technology"
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Albert+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+</head>
+<body>
+
+  <!-- ====== NAV ====== -->
+  <header class="nav" id="nav">
+    <a href="#top" class="nav__brand">
+      <img class="nav__logo" src="assets/logo.svg" alt="" width="34" height="34" />
+      <span class="nav__name" id="navName">Jeslin P James</span>
+    </a>
+    <nav class="nav__links" id="navLinks" aria-label="Primary">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+  </header>
+  <div class="nav__mobile" id="navMobile" aria-hidden="true">
+    <a href="#about">About</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </div>
+
+  <main id="top">
+
+    <!-- ====== HERO ====== -->
+    <section class="hero">
+      <canvas id="signalCanvas" class="hero__canvas" aria-hidden="true"></canvas>
+      <div class="hero__inner">
+        <p class="hero__eyebrow mono" id="heroAvailability"></p>
+        <h1 class="hero__name" id="heroName"></h1>
+        <p class="hero__role" id="heroRole"></p>
+        <p class="hero__tagline" id="heroTagline"></p>
+        <div class="hero__actions" id="heroActions"></div>
+        <div class="hero__socials" id="heroSocials"></div>
+      </div>
+      <a class="hero__scroll mono" href="#about" aria-label="Scroll to about section">
+        <span>scroll</span>
+        <span class="hero__scroll-line"></span>
+      </a>
+    </section>
+
+    <!-- ====== ABOUT ====== -->
+    <section class="section" id="about">
+      <div class="section__head reveal">
+        <span class="section__index mono">01</span>
+        <h2 class="section__title">About</h2>
+      </div>
+      <div class="about">
+        <div class="about__text reveal">
+          <h3 class="about__heading" id="aboutHeading"></h3>
+          <div id="aboutParagraphs"></div>
+        </div>
+        <div class="about__stats" id="aboutStats"></div>
+      </div>
+    </section>
+
+    <!-- ====== EXPERIENCE ====== -->
+    <section class="section" id="experience">
+      <div class="section__head reveal">
+        <span class="section__index mono">02</span>
+        <h2 class="section__title">Experience</h2>
+      </div>
+      <div class="timeline" id="experienceList"></div>
+    </section>
+
+    <!-- ====== OPEN SOURCE ====== -->
+    <section class="section" id="opensource">
+      <div class="section__head reveal">
+        <span class="section__index mono">03</span>
+        <h2 class="section__title">Open Source</h2>
+      </div>
+      <div class="oss" id="openSourceList"></div>
+    </section>
+
+    <!-- ====== PROJECTS ====== -->
+    <section class="section" id="projects">
+      <div class="section__head reveal">
+        <span class="section__index mono">04</span>
+        <h2 class="section__title">Projects</h2>
+      </div>
+      <div class="projects" id="projectsGrid"></div>
+      <div class="projects__more-wrap reveal">
+        <button class="btn btn--ghost" id="moreProjectsBtn" type="button">Show more projects</button>
+      </div>
+    </section>
+
+    <!-- ====== SKILLS ====== -->
+    <section class="section" id="skills">
+      <div class="section__head reveal">
+        <span class="section__index mono">05</span>
+        <h2 class="section__title">Skills</h2>
+      </div>
+      <div class="skills" id="skillsGrid"></div>
+    </section>
+
+    <!-- ====== ACHIEVEMENTS ====== -->
+    <section class="section" id="achievements">
+      <div class="section__head reveal">
+        <span class="section__index mono">06</span>
+        <h2 class="section__title">Achievements</h2>
+      </div>
+      <div class="achievements" id="achievementsList"></div>
+    </section>
+
+    <!-- ====== EDUCATION ====== -->
+    <section class="section" id="education">
+      <div class="section__head reveal">
+        <span class="section__index mono">07</span>
+        <h2 class="section__title">Education</h2>
+      </div>
+      <div class="education" id="educationList"></div>
+    </section>
+
+    <!-- ====== CONTACT ====== -->
+    <section class="section section--contact" id="contact">
+      <div class="contact reveal">
+        <p class="contact__eyebrow mono">08 / get in touch</p>
+        <h2 class="contact__heading" id="contactHeading"></h2>
+        <p class="contact__blurb" id="contactBlurb"></p>
+        <div class="contact__actions" id="contactActions"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p class="mono" id="footerText"></p>
+    <div class="footer__socials" id="footerSocials"></div>
+  </footer>
+
+  <script src="js/portfolioData.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
