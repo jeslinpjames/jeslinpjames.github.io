@@ -71,9 +71,10 @@ function renderHero() {
   actions.appendChild(projBtn);
 
   if (p.resumeUrl) {
-    const cv = el("a", "btn btn--ghost", "Download résumé");
+    const cv = el("a", "btn btn--ghost", "View résumé");
     cv.href = p.resumeUrl;
     cv.target = "_blank";
+    cv.rel = "noopener noreferrer";
     actions.appendChild(cv);
   }
 

@@ -26,7 +26,7 @@ const portfolioData = {
     availability: "Open to internships & full-time roles",
     email: "jeslin@ug.cusat.ac.in",
     phone: "+91 9383468783",
-    resumeUrl: "", // e.g. "assets/Jeslin_Resume.pdf" — leave "" to hide button
+    resumeUrl: "assets/Jeslin_Resume.pdf",
     socials: [
       { label: "GitHub",   url: "https://github.com/jeslinpjames", icon: "github" },
       { label: "LinkedIn", url: "https://www.linkedin.com/in/jeslin-p-james", icon: "linkedin" },
