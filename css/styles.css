@@ -801,3 +801,14 @@ a:focus-visible, button:focus-visible {
   .reveal { opacity: 1; transform: none; }
   .hero__canvas { display: none; }
 }
+@media (prefers-reduced-motion: reduce) {
+  .reveal, 
+  .hero__inner, 
+  .hero__name, 
+  .project {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+  }
+}
