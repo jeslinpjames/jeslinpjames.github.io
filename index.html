@@ -1,16 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Progressive enhancement flag: set BEFORE first paint so the fade-in
+       animations only switch on when JS is available. With no JS (or before
+       JS runs), every element stays fully visible and crawlable. -->
+  <script>(function (d) { d.className = d.className.replace(/\bno-js\b/, "") + " js"; })(document.documentElement);</script>
+
   <title>Jeslin P James — AI/ML & Backend Engineer</title>
   <meta name="description" content="Portfolio of Jeslin P James — AI & Machine Learning engineer specialising in deep learning, computer vision, and production backend systems." />
+  <meta name="author" content="Jeslin P James" />
+  <meta name="theme-color" content="#0b0a10" />
+  <meta name="robots" content="index, follow" />
 
   <!-- Social sharing previews -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Jeslin P James — AI/ML & Backend Engineer" />
   <meta property="og:description" content="Deep learning systems that listen, see, and ship — plus the production backends that serve them." />
+  <meta property="og:url" content="https://jeslinpjames.in/" />
+  <meta property="og:site_name" content="Jeslin P James Portfolio" />
+  <meta property="og:image" content="https://jeslinpjames.in/assets/logo-192.png" />
   <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Jeslin P James — AI/ML & Backend Engineer" />
+  <meta name="twitter:description" content="Deep learning systems that listen, see, and ship — plus the production backends that serve them." />
+  <meta name="twitter:image" content="https://jeslinpjames.in/assets/logo-192.png" />
+
+  <!-- Critical SEO Canonical Tag -->
+  <link rel="canonical" href="https://jeslinpjames.in/" />
 
   <!-- Structured data for search engines -->
   <script type="application/ld+json">
@@ -19,8 +37,9 @@
     "@type": "Person",
     "name": "Jeslin P James",
     "jobTitle": "AI/ML & Backend Engineer",
-    "email": "mailto:jeslin@ug.cusat.ac.in",
-    "url": "https://github.com/jeslinpjames",
+    "description": "AI & Machine Learning engineer specialising in deep learning, computer vision, and production backend systems.",
+    "email": "jeslin@ug.cusat.ac.in",
+    "url": "https://jeslinpjames.in/",
     "sameAs": [
       "https://github.com/jeslinpjames",
       "https://www.linkedin.com/in/jeslin-p-james"
@@ -38,15 +57,19 @@
   <link rel="icon" type="image/png" sizes="192x192" href="assets/logo-192.png" />
   <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
   <link rel="apple-touch-icon" href="assets/logo-192.png" />
-  <!-- Critical SEO Canonical Tag -->
-  <link rel="canonical" href="https://jeslinpjames.in/" />
 
-  <!-- Completed Open Graph Social Previews -->
-  <meta property="og:url" content="https://jeslinpjames.in/" />
-  <meta property="og:site_name" content="Jeslin P James Portfolio" />
-  
-  <!-- Alternate text fallback for modern browsers -->
-  <meta name="robots" content="index, follow" />
+  <!-- Last-resort fallback: if JS is disabled the .js rules never apply and
+       content is already visible, but this guarantees it for any edge case. -->
+  <noscript>
+    <style>
+      .reveal,
+      .hero__inner > * {
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+      }
+    </style>
+  </noscript>
 </head>
 
 <body>
@@ -82,10 +105,13 @@
     <section class="hero">
       <canvas id="signalCanvas" class="hero__canvas" aria-hidden="true"></canvas>
       <div class="hero__inner">
-        <p class="hero__eyebrow mono" id="heroAvailability"></p>
+        <!-- Critical above-the-fold text is hard-coded here so crawlers see it
+             in the served HTML. main.js re-sets these from portfolioData.js at
+             runtime (idempotent), so portfolioData.js remains the live source. -->
+        <p class="hero__eyebrow mono" id="heroAvailability">Open to internships &amp; full-time roles</p>
         <h1 class="hero__name" id="heroName">Jeslin P James</h1>
-        <p class="hero__role" id="heroRole">AI/ML & Backend Engineer</p>
-        <p class="hero__tagline" id="heroTagline"></p>
+        <p class="hero__role" id="heroRole">AI/ML &amp; Backend Engineer</p>
+        <p class="hero__tagline" id="heroTagline">I build deep learning systems that listen, see, and understand — and the production backends that take them from notebook to deployed product.</p>
         <div class="hero__actions" id="heroActions"></div>
         <div class="hero__socials" id="heroSocials"></div>
       </div>
@@ -103,7 +129,7 @@
       </div>
       <div class="about">
         <div class="about__text reveal">
-          <h3 class="about__heading" id="aboutHeading">Building Production-Ready Deep Learning & Backend Systems</h3>
+          <h3 class="about__heading" id="aboutHeading">Training models by day, serving them by night.</h3>
           <div id="aboutParagraphs"></div>
         </div>
         <div class="about__stats" id="aboutStats"></div>
@@ -171,7 +197,7 @@
     <section class="section section--contact" id="contact">
       <div class="contact reveal">
         <p class="contact__eyebrow mono">08 / get in touch</p>
-        <h2 class="contact__heading" id="contactHeading"></h2>
+        <h2 class="contact__heading" id="contactHeading">Let's build something that actually ships.</h2>
         <p class="contact__blurb" id="contactBlurb"></p>
         <div class="contact__actions" id="contactActions"></div>
       </div>

@@ -399,19 +399,67 @@ function initNav() {
 }
 
 /* ============ SCROLL REVEALS ============ */
+/* Hardened for SEO. The CSS only hides .reveal elements when the <html> tag
+   has the .js class (added before paint). On top of that, this function adds
+   two safety nets so search-engine crawlers — which render with a very tall
+   viewport and do not scroll — always see the fully-revealed content:
+     1. On load, reveal anything already inside the viewport. A crawler's tall
+        viewport contains the whole page, so everything is revealed at once.
+        A human's normal viewport only reveals what's on screen, so the
+        scroll-in animation is fully preserved below the fold.
+     2. If no human interaction (scroll/pointer/key) occurs within a short
+        window, reveal everything regardless — guarantees nothing is ever
+        left invisible/unindexed even on an unusually short render viewport. */
 function initReveals() {
+  const revealEls = Array.prototype.slice.call(document.querySelectorAll(".reveal"));
+  if (!revealEls.length) return;
+
+  const show = (node) => node.classList.add("is-visible");
+
+  // No IntersectionObserver support → just show everything immediately.
+  if (!("IntersectionObserver" in window)) {
+    revealEls.forEach(show);
+    return;
+  }
+
+  // Primary behaviour: fade elements in as they scroll into view.
   const obs = new IntersectionObserver(
     (entries) => {
       entries.forEach((e) => {
         if (e.isIntersecting) {
-          e.target.classList.add("is-visible");
+          show(e.target);
           obs.unobserve(e.target);
         }
       });
     },
     { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
   );
-  document.querySelectorAll(".reveal").forEach((n) => obs.observe(n));
+  revealEls.forEach((n) => obs.observe(n));
+
+  // Safety net #1 — reveal whatever is already on screen (tall crawler
+  // viewport = whole page; human viewport = above-the-fold only).
+  const revealInViewport = () => {
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    revealEls.forEach((n) => {
+      if (n.classList.contains("is-visible")) return;
+      const r = n.getBoundingClientRect();
+      if (r.top < vh && r.bottom > 0) show(n);
+    });
+  };
+  requestAnimationFrame(revealInViewport);
+  window.addEventListener("load", () => requestAnimationFrame(revealInViewport), { once: true });
+
+  // Safety net #2 — if nobody interacts (typical of a crawler / screenshot
+  // renderer), reveal everything so text is never left hidden. A real visitor
+  // almost always scrolls or moves within this window, keeping the animation.
+  let interacted = false;
+  const onInteract = () => { interacted = true; };
+  ["scroll", "wheel", "pointerdown", "touchstart", "keydown"].forEach((evt) =>
+    window.addEventListener(evt, onInteract, { once: true, passive: true })
+  );
+  window.setTimeout(() => {
+    if (!interacted) revealEls.forEach(show);
+  }, 2500);
 }
 
 /* ============ BOOT ============ */

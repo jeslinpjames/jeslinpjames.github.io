@@ -257,18 +257,19 @@ a:focus-visible, button:focus-visible {
   margin-top: 1.6rem;
 }
 
-/* hero entry animation */
-.hero__inner > * {
+/* hero entry animation — only when JS is present (.js). Without JS the hero
+   text is shown immediately so crawlers and no-JS users can read it. */
+.js .hero__inner > * {
   opacity: 0;
   transform: translateY(22px);
   animation: rise 0.85s var(--ease) forwards;
 }
-.hero__inner > *:nth-child(1) { animation-delay: 0.05s; }
-.hero__inner > *:nth-child(2) { animation-delay: 0.15s; }
-.hero__inner > *:nth-child(3) { animation-delay: 0.27s; }
-.hero__inner > *:nth-child(4) { animation-delay: 0.39s; }
-.hero__inner > *:nth-child(5) { animation-delay: 0.51s; }
-.hero__inner > *:nth-child(6) { animation-delay: 0.63s; }
+.js .hero__inner > *:nth-child(1) { animation-delay: 0.05s; }
+.js .hero__inner > *:nth-child(2) { animation-delay: 0.15s; }
+.js .hero__inner > *:nth-child(3) { animation-delay: 0.27s; }
+.js .hero__inner > *:nth-child(4) { animation-delay: 0.39s; }
+.js .hero__inner > *:nth-child(5) { animation-delay: 0.51s; }
+.js .hero__inner > *:nth-child(6) { animation-delay: 0.63s; }
 @keyframes rise {
   to { opacity: 1; transform: translateY(0); }
 }
@@ -391,12 +392,15 @@ a:focus-visible, button:focus-visible {
 }
 
 /* ---------- scroll reveal ---------- */
-.reveal {
+/* The hidden start-state is scoped to .js so that, without JavaScript (and for
+   any crawler/snapshot taken before JS reveals content), everything is visible
+   and indexable. With JS, main.js adds .is-visible to fade elements in. */
+.js .reveal {
   opacity: 0;
   transform: translateY(28px);
   transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
 }
-.reveal.is-visible {
+.js .reveal.is-visible {
   opacity: 1;
   transform: translateY(0);
 }
@@ -802,9 +806,9 @@ a:focus-visible, button:focus-visible {
   .hero__canvas { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .reveal, 
-  .hero__inner, 
-  .hero__name, 
+  .reveal,
+  .hero__inner,
+  .hero__name,
   .project {
     animation: none !important;
     opacity: 1 !important;
