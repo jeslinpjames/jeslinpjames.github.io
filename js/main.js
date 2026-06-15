@@ -399,30 +399,23 @@ function initNav() {
 }
 
 /* ============ SCROLL REVEALS ============ */
-/* Hardened for SEO. The CSS only hides .reveal elements when the <html> tag
-   has the .js class (added before paint). On top of that, this function adds
-   two safety nets so search-engine crawlers — which render with a very tall
-   viewport and do not scroll — always see the fully-revealed content:
-     1. On load, reveal anything already inside the viewport. A crawler's tall
-        viewport contains the whole page, so everything is revealed at once.
-        A human's normal viewport only reveals what's on screen, so the
-        scroll-in animation is fully preserved below the fold.
-     2. If no human interaction (scroll/pointer/key) occurs within a short
-        window, reveal everything regardless — guarantees nothing is ever
-        left invisible/unindexed even on an unusually short render viewport. */
 function initReveals() {
   const revealEls = Array.prototype.slice.call(document.querySelectorAll(".reveal"));
   if (!revealEls.length) return;
 
   const show = (node) => node.classList.add("is-visible");
 
-  // No IntersectionObserver support → just show everything immediately.
-  if (!("IntersectionObserver" in window)) {
+  // Known crawlers, link-preview fetchers, and headless/preview renderers.
+  const isCrawler = /bot|crawl|spider|slurp|bingpreview|google|baidu|yandex|duckduck|facebookexternalhit|embedly|quora|pinterest|whatsapp|telegram|lighthouse|headless|prerender|screenshot/i
+    .test(navigator.userAgent || "");
+
+  // Crawler, or no IntersectionObserver support → reveal everything now.
+  if (isCrawler || !("IntersectionObserver" in window)) {
     revealEls.forEach(show);
     return;
   }
 
-  // Primary behaviour: fade elements in as they scroll into view.
+  // Primary behaviour: fade each element in as it scrolls into view.
   const obs = new IntersectionObserver(
     (entries) => {
       entries.forEach((e) => {
@@ -436,8 +429,10 @@ function initReveals() {
   );
   revealEls.forEach((n) => obs.observe(n));
 
-  // Safety net #1 — reveal whatever is already on screen (tall crawler
-  // viewport = whole page; human viewport = above-the-fold only).
+  // Reveal whatever is already on screen at load (above-the-fold for a human,
+  // the whole page for a tall crawler viewport). Keeps the first paint and any
+  // preview screenshot from ever being blank, without touching below-fold
+  // elements — those still animate in on scroll.
   const revealInViewport = () => {
     const vh = window.innerHeight || document.documentElement.clientHeight;
     revealEls.forEach((n) => {
@@ -448,18 +443,6 @@ function initReveals() {
   };
   requestAnimationFrame(revealInViewport);
   window.addEventListener("load", () => requestAnimationFrame(revealInViewport), { once: true });
-
-  // Safety net #2 — if nobody interacts (typical of a crawler / screenshot
-  // renderer), reveal everything so text is never left hidden. A real visitor
-  // almost always scrolls or moves within this window, keeping the animation.
-  let interacted = false;
-  const onInteract = () => { interacted = true; };
-  ["scroll", "wheel", "pointerdown", "touchstart", "keydown"].forEach((evt) =>
-    window.addEventListener(evt, onInteract, { once: true, passive: true })
-  );
-  window.setTimeout(() => {
-    if (!interacted) revealEls.forEach(show);
-  }, 2500);
 }
 
 /* ============ BOOT ============ */
